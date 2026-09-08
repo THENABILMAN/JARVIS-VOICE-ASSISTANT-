@@ -14,7 +14,7 @@ from livekit.agents.beta.tools import EndCallTool
 from livekit.plugins import ai_coustics, google
 
 from browser import BrowserManager
-from prompts import AGENT_ISNTRUCTIONS
+from prompts import AGENT_INSTRUCTIONS
 from tools import BrowserTools
 
 load_dotenv(".env.local")
@@ -51,7 +51,7 @@ class Assistant(Agent):
             # 3. Add `from livekit.plugins import openai` to the top of this file
             # 4. Replace the llm argument with:
             #     llm=openai.realtime.RealtimeModel(voice="marin")
-            instructions=AGENT_ISNTRUCTIONS,
+            instructions=AGENT_INSTRUCTIONS,
             tools=[
                 *self.browser_tools.tools,
                 *self._end_call_tool.tools,
@@ -117,18 +117,7 @@ async def my_agent(ctx: JobContext):
             ),
         ),
     )
-
-    # # Add a virtual avatar to the session, if desired
-    # # For other providers, see https://docs.livekit.io/agents/models/avatar/
-    # avatar = anam.AvatarSession(
-    #     persona_config=anam.PersonaConfig(
-    #         name="...",
-    #         avatarId="...",  # See https://docs.livekit.io/agents/models/avatar/plugins/anam
-    #     ),
-    # )
-    # # Start the avatar and wait for it to join
-    # await avatar.start(session, room=ctx.room)
-
+    
     # Join the room and connect to the user
     await ctx.connect()
 
