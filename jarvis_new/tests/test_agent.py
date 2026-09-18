@@ -3,11 +3,37 @@ import textwrap
 import pytest
 from livekit.agents import AgentSession, inference, llm
 
-from agent import Assistant
+from agent import Assistant, load_user_profile, preferred_name_from_profile
 
 
 def _judge_llm() -> llm.LLM:
     return inference.LLM(model="openai/gpt-4.1-mini")
+
+
+def test_assistant_includes_recalled_memory() -> None:
+    assistant = Assistant(memory_context="The user prefers Bengali music.")
+
+    assert "The user prefers Bengali music." in assistant.instructions
+
+
+def test_assistant_includes_user_profile() -> None:
+    assistant = Assistant(profile_context="Preferred name: Nabil")
+
+    assert "Preferred name: Nabil" in assistant.instructions
+
+
+def test_checked_in_user_profile_is_available() -> None:
+    assert "Preferred name: Nabil" in load_user_profile()
+
+
+def test_preferred_name_is_extracted_from_profile_data() -> None:
+    assert preferred_name_from_profile("# Identity\nPreferred name: Ada") == "Ada"
+
+
+def test_assistant_includes_dynamic_preferred_name() -> None:
+    assistant = Assistant(profile_context="Preferred name: Ada")
+
+    assert "preferred name as Ada" in assistant.instructions
 
 
 @pytest.mark.asyncio

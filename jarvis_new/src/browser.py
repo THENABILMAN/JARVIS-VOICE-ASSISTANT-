@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
-import re
 import sys
 import time
 import uuid
@@ -204,7 +203,7 @@ class BrowserManager:
                     "The page content was not available in time."
                 ) from exc
 
-            text = re.sub(r"\s+", " ", text).strip()
+            text = " ".join(text.split())
             truncated = len(text) > max_chars
             return {
                 "url": page.url,
@@ -244,7 +243,7 @@ class BrowserManager:
             except PlaywrightTimeoutError as exc:
                 raise BrowserError("The page could not be inspected in time.") from exc
 
-            text = re.sub(r"\s+", " ", text).strip()
+            text = " ".join(text.split())
             return {
                 "url": page.url,
                 "title": await page.title(),

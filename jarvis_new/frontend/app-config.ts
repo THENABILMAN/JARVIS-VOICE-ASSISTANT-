@@ -33,9 +33,9 @@ export interface AppConfig {
 }
 
 export const APP_CONFIG_DEFAULTS: AppConfig = {
-  companyName: 'LiveKit',
-  pageTitle: 'LiveKit Voice Agent',
-  pageDescription: 'A voice agent built with LiveKit',
+  companyName: 'Jarvis',
+  pageTitle: 'Jarvis | Your voice butler',
+  pageDescription: 'A private voice butler for getting things done.',
 
   supportsChatInput: true,
   supportsVideoInput: true,
@@ -43,10 +43,10 @@ export const APP_CONFIG_DEFAULTS: AppConfig = {
   isPreConnectBufferEnabled: true,
 
   logo: '/lk-logo.svg',
-  accent: '#002cf2',
+  accent: '#16d9c5',
   logoDark: '/lk-logo-dark.svg',
-  accentDark: '#1fd5f9',
-  startButtonText: 'Talk to Jarvis',
+  accentDark: '#73f7e4',
+  startButtonText: 'Begin private session',
 
   // optional: audio visualization configuration
   // audioVisualizerType: 'bar',
@@ -65,7 +65,7 @@ export const APP_CONFIG_DEFAULTS: AppConfig = {
   audioVisualizerType: 'aura',
 
   // agent dispatch configuration
-  agentName: process.env.AGENT_NAME ?? undefined,
+  agentName: process.env.AGENT_NAME || 'my-agent',
 
   // LiveKit Cloud Sandbox configuration
   sandboxId: undefined,

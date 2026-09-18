@@ -27,20 +27,29 @@ export async function POST(req: Request) {
 
   try {
     if (LIVEKIT_URL === undefined) {
-      throw new Error('LIVEKIT_URL is not defined');
+      throw new Error(
+        'LIVEKIT_URL is not defined. Add it to frontend/.env.local and restart Next.js.'
+      );
     }
     if (API_KEY === undefined) {
-      throw new Error('LIVEKIT_API_KEY is not defined');
+      throw new Error(
+        'LIVEKIT_API_KEY is not defined. Add it to frontend/.env.local and restart Next.js.'
+      );
     }
     if (API_SECRET === undefined) {
-      throw new Error('LIVEKIT_API_SECRET is not defined');
+      throw new Error(
+        'LIVEKIT_API_SECRET is not defined. Add it to frontend/.env.local and restart Next.js.'
+      );
     }
 
     // Parse room config from request body.
-    const body = await req.json();
+    const body = await req.json().catch(() => ({}));
+    const configuredAgentName = process.env.AGENT_NAME || 'my-agent';
     const roomConfig = body?.room_config
       ? RoomConfiguration.fromJson(body.room_config, { ignoreUnknownFields: true })
-      : new RoomConfiguration();
+      : RoomConfiguration.fromJson({
+          agents: [{ agent_name: configuredAgentName }],
+        });
 
     // Generate participant token
     const participantName = 'user';

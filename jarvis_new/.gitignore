@@ -1,6 +1,7 @@
 .env
 .env.*
 !.env.example
+.spotify-token.json
 .DS_Store
 __pycache__
 .idea
